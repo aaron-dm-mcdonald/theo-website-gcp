@@ -1,17 +1,22 @@
 # theo-website-gcp
 
-This is a GCP-ready Debian version of the original AWS EC2 metadata demo.
+This repo is the GCP / Debian version of the original `theo-website` AWS repo.
 
 ## What changed
 
-- Replaced AWS IMDSv2 calls with GCP metadata server calls.
-- Replaced AL2023 `dnf` steps with Debian `apt-get`.
-- Uses `gunicorn` behind `nginx` instead of running the Flask dev server on port 80.
-- Startup script uses `sudo` throughout and is safe for the default Debian image on Compute Engine.
+- Replaced AWS IMDSv2 metadata calls with GCP metadata server calls.
+- Replaced Amazon Linux 2023 `dnf` setup with Debian `apt-get`.
+- Kept the same Flask route structure:
+  - `/`
+  - `/metadata`
+- Kept the same static image and page layout.
+- Uses `gunicorn` behind `nginx` on a default GCP Debian VM.
+- Uses `sudo` throughout the startup script.
+- Startup script now clones this repo, not the original AWS repo.
 
 ## Metadata fields returned
 
-`/metadata` now returns:
+`/metadata` returns:
 
 - Instance Name
 - Instance Private IP Address
@@ -19,14 +24,7 @@ This is a GCP-ready Debian version of the original AWS EC2 metadata demo.
 - Project ID
 - VPC Network
 
-## Files
-
-- `app.py` - Flask app updated for GCP metadata
-- `startup.sh` - self-contained GCP startup script for a Debian VM
-- `templates/index.html` - original page kept intact
-- `static/styles.css` - original stylesheet kept intact
-
-## Run locally on a Debian or Ubuntu host
+## Local run
 
 ```bash
 python3 -m venv venv
@@ -36,7 +34,7 @@ python3 -m venv venv
 
 Then open `http://SERVER_IP:8080`.
 
-## On GCP
+## GCP VM startup
 
-Use `startup.sh` as the VM startup script and allow inbound TCP/80.
-# theo-website-gcp
+Use `startup.sh` as the startup script on a Debian-based Compute Engine VM.
+Make sure the VM allows inbound TCP/80.
