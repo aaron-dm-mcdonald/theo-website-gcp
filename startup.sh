@@ -7,4 +7,4 @@ cd /home
 sudo git clone https://github.com/aaron-dm-mcdonald/theo-website-gcp.git
 cd theo-website-gcp
 
-nohup python3 app.py > output.log 2>&1 &
+sudo nohup python3 app.py > output.log 2>&1 &
